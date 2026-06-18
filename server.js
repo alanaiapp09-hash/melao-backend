@@ -133,65 +133,7 @@ app.use((req, res, next) => {
 app.get('/', (_, res) => res.json({ ok: true, app: 'QuickOrder · El Melao de Inés' }));
 
 // ─── MENÚ ─────────────────────────────────────────────────────────────────────
-let menuData = {
-  restaurante: { nombre: 'El Melao de Inés', subtitulo: 'restobar' },
-  categorias: [
-    {id:'bebidas',label:'Bebidas',dest:'barra1',items:[
-      {id:'bv1',n:'Vino tinto de la casa',p:0},{id:'bv2',n:'Vino blanco de la casa',p:0},
-      {id:'bv3',n:'Cerveza nacional',p:0},{id:'bv4',n:'Refrescos',p:0},
-      {id:'bv5',n:'Agua mineral',p:0},{id:'bv6',n:'Café / Infusión',p:0},
-      {id:'bv7',n:'Papelón con limón',p:0}
-    ]},
-    {id:'comenzar',label:'Para comenzar',dest:'cocina',items:[
-      {id:'cm1',n:'Salmorejo cordobés',p:8},{id:'cm2',n:'Consomé',p:6},
-      {id:'cm3',n:'Espárragos con dos salsas',p:10},{id:'cm4',n:'Sopa castellana',p:8}
-    ]},
-    {id:'entrantes',label:'Entrantes',dest:'cocina',items:[
-      {id:'en1',n:'Tequeños',p:8},{id:'en2',n:'Empanadas',p:8},
-      {id:'en3',n:'Ensalada mixta',p:8},{id:'en4',n:'Ensalada de ventresca',p:12},
-      {id:'en5',n:'Ensalada rusa',p:8},{id:'en6',n:'Queso curado',p:9},
-      {id:'en7',n:'Croquetas de jamón',p:10},{id:'en8',n:'Jamón ibérico',p:14},
-      {id:'en9',n:'Surtido ibérico',p:18},{id:'en10',n:'Tortilla de patatas',p:8},
-      {id:'en11',n:'Patatas bravas',p:7},{id:'en12',n:'Gambas al ajillo',p:12},
-      {id:'en13',n:'Pulpo a la gallega',p:16}
-    ]},
-    {id:'parrilla',label:'Parrilla',dest:'barbacoa',items:[
-      {id:'pa1',n:'Carne en Vara (¼ Kg)',p:0},{id:'pa2',n:'Carne en Vara (½ Kg)',p:0},
-      {id:'pa3',n:'Carne en Vara (1 Kg)',p:0},{id:'pa4',n:'Pollo en Vara (¼ Kg)',p:0},
-      {id:'pa5',n:'Pollo en Vara (½ Kg)',p:0},{id:'pa6',n:'Pollo en Vara (1 Kg)',p:0}
-    ]},
-    {id:'principales',label:'Principales',dest:'cocina',items:[
-      {id:'pr1',n:'Merluza a la romana',p:16},{id:'pr2',n:'Entrecot a la parrilla',p:20},
-      {id:'pr3',n:'Cachopo de ternera',p:18},{id:'pr4',n:'Cachopo de pollo',p:16},
-      {id:'pr5',n:'Cachopo de cerdo',p:16},{id:'pr6',n:'Pollo al ajillo',p:12},
-      {id:'pr7',n:'Pechuga de pollo a la plancha',p:11}
-    ]},
-    {id:'criollas',label:'Criollas',dest:'cocina',items:[
-      {id:'cr1',n:'Arepas',p:10},{id:'cr2',n:'Patacones',p:12},
-      {id:'cr3',n:'Cachapa con queso',p:0},{id:'cr4',n:'Cachapa con queso y cochino frito',p:0}
-    ]},
-    {id:'guarniciones',label:'Guarniciones',dest:'barbacoa',items:[
-      {id:'gu1',n:'Yuca sancochada',p:0},{id:'gu2',n:'Chorizo',p:0},{id:'gu3',n:'Morcilla',p:0}
-    ]},
-    {id:'fastfood',label:'Fast Food',dest:'cocina',items:[
-      {id:'hb1',n:'Mi Burger Clásica',p:10},{id:'hb2',n:'Mi Burger BBQ',p:12},
-      {id:'hb3',n:'Mi Burger Bacon & Cheese',p:14},{id:'hb4',n:'Mi Burger Doble El Melao',p:16},
-      {id:'fp1',n:'Pizza Margarita',p:10},{id:'fp2',n:'Pizza Jamón y queso',p:12},
-      {id:'fp3',n:'Pizza Diavola',p:12},{id:'fp4',n:'Pizza Barbacoa',p:14},
-      {id:'bo1',n:'Bocadillo Calamares',p:8},{id:'bo2',n:'Bocadillo Lomo',p:8},
-      {id:'bo3',n:'Bocadillo Jamón y queso',p:7},{id:'bo4',n:'Bocadillo Bacon y queso',p:8}
-    ]},
-    {id:'kids',label:'Kids',dest:'cocina',items:[
-      {id:'ki1',n:'Hamburguesa infantil',p:0},{id:'ki2',n:'Hot Dog',p:0},{id:'ki3',n:'Fingers de pollo',p:0}
-    ]},
-    {id:'postres',label:'Postres',dest:'cocina',items:[
-      {id:'po1',n:'Mousse de turrón',p:5},{id:'po2',n:'Coulant de chocolate con helado',p:6},
-      {id:'po3',n:'Tarta de chocolate con toffee',p:6},{id:'po4',n:'Fruta fresca',p:4},
-      {id:'po5',n:'Yogur natural',p:4},{id:'po6',n:'Helados',p:4},
-      {id:'po7',n:'Bizcocho sin gluten',p:5}
-    ]}
-  ]
-};
+let menuData = {"restaurante":{"nombre":"El Melao de Inés","subtitulo":"restobar"},"categorias":[{"id":"bebidas","label":"Bebidas","dest":"barra1","items":[{"id":"bv1","n":"Copas de vino","p":3.5},{"id":"bv2","n":"Tinto de verano (copa)","p":4.5},{"id":"bv3","n":"Cerveza","p":3.5},{"id":"bv4","n":"Refrescos (lata)","p":2.5},{"id":"bv5","n":"Agua pequeña","p":2.0},{"id":"bv6","n":"Café / Infusión","p":2.0},{"id":"bv7","n":"Papelón con limón (vaso)","p":3.5},{"id":"bv8","n":"Papelón con limón (jarra)","p":15.0}]},{"id":"comenzar","label":"Para comenzar","dest":"cocina","items":[{"id":"cm1","n":"Salmorejo cordobés","p":8},{"id":"cm2","n":"Consomé","p":6},{"id":"cm3","n":"Espárragos con dos salsas","p":10},{"id":"cm4","n":"Sopa castellana","p":8}]},{"id":"entrantes","label":"Entrantes","dest":"cocina","items":[{"id":"en1","n":"Tequeños (6 uds)","p":8},{"id":"en2","n":"Empanadas (4 uds)","p":8},{"id":"en3","n":"Ensalada mixta","p":8},{"id":"en4","n":"Ensalada de ventresca","p":14},{"id":"en5","n":"Ensalada rusa","p":9},{"id":"en6","n":"Queso curado","p":10},{"id":"en7","n":"Croquetas de jamón (8 uds)","p":10},{"id":"en8","n":"Jamón ibérico","p":16},{"id":"en9","n":"Tortilla de patatas (ración)","p":2.5},{"id":"en10","n":"Tortilla entera","p":14},{"id":"en11","n":"Patatas bravas","p":8},{"id":"en12","n":"Gambas al ajillo","p":12},{"id":"en13","n":"Pulpo a la gallega","p":18}]},{"id":"parrilla","label":"Parrilla","dest":"barbacoa","items":[{"id":"pa1","n":"Carne en Vara (1 Kg)","p":60},{"id":"pa2","n":"Carne en Vara (½ Kg)","p":30},{"id":"pa3","n":"Carne en Vara (¼ Kg)","p":15},{"id":"pa4","n":"Pollo en Vara (1 Kg)","p":18},{"id":"pa5","n":"Pollo en Vara (½ Kg)","p":9},{"id":"pa6","n":"Pollo en Vara (¼ Kg)","p":4.5}]},{"id":"principales","label":"Principales","dest":"cocina","items":[{"id":"pr1","n":"Merluza a la romana","p":16},{"id":"pr2","n":"Entrecot a la parrilla (300 gr)","p":22},{"id":"pr3","n":"Cachopo de ternera","p":22},{"id":"pr4","n":"Cachopo de pollo","p":18},{"id":"pr5","n":"Cachopo de cerdo","p":18},{"id":"pr6","n":"Pollo al ajillo","p":14},{"id":"pr7","n":"Pechuga de pollo a la plancha","p":11}]},{"id":"criollas","label":"Criollas","dest":"cocina","items":[{"id":"ar1","n":"Arepa de ternera mechada","p":9},{"id":"ar2","n":"Arepa reina pepiada","p":10},{"id":"ar3","n":"Arepa pollo desmechado","p":9},{"id":"ar4","n":"Arepa pabellón","p":10},{"id":"ca1","n":"Cachapa con queso","p":12},{"id":"ca2","n":"Cachapa con queso y cochino frito","p":15},{"id":"cr1","n":"Patacones","p":15}]},{"id":"fastfood","label":"Fast Food","dest":"cocina","items":[{"id":"hb1","n":"Mi Burger Clásica","p":10},{"id":"hb2","n":"Mi Burger BBQ","p":12},{"id":"hb3","n":"Mi Burger Doble Carne","p":14},{"id":"hb4","n":"Mi Burger El Melao","p":16},{"id":"fp1","n":"Pizza Margarita","p":10},{"id":"fp2","n":"Pizza Jamón y queso","p":12},{"id":"fp3","n":"Pizza Diavola","p":12},{"id":"fp4","n":"Pizza Barbacoa","p":14},{"id":"bo1","n":"Bocadillo Calamares","p":8},{"id":"bo2","n":"Bocadillo Lomo","p":8},{"id":"bo3","n":"Bocadillo Jamón y queso","p":7},{"id":"bo4","n":"Bocadillo Bacon y queso","p":8}]},{"id":"kids","label":"Kids","dest":"cocina","items":[{"id":"ki1","n":"Hamburguesa con queso y bacon","p":9},{"id":"ki2","n":"Fingers de pollo (6 uds)","p":8},{"id":"ki3","n":"Tortilla de jamón y queso (rac.)","p":3},{"id":"ki4","n":"Lomo de cerdo a la plancha","p":7},{"id":"ki5","n":"Pasta bolognesa","p":7},{"id":"ki6","n":"Pechuga de pollo a la plancha","p":8}]},{"id":"postres","label":"Postres","dest":"cocina","items":[{"id":"po1","n":"Tres leches","p":6},{"id":"po2","n":"Red Velvet","p":5},{"id":"po3","n":"De frutas","p":5},{"id":"po4","n":"Helado","p":4},{"id":"po5","n":"Tarta de chocolate","p":5},{"id":"po6","n":"Mousse de limón","p":5}]},{"id":"guarniciones","label":"Guarniciones","dest":"barbacoa","items":[{"id":"gu1","n":"Arroz blanco","p":3},{"id":"gu2","n":"Patatas fritas","p":3},{"id":"gu3","n":"Papas al vapor","p":3},{"id":"gu4","n":"Chorizo (1 ud)","p":9.5},{"id":"gu5","n":"Morcilla (1 ud)","p":8.5},{"id":"gu6","n":"Yuca sancochada (ración)","p":5}]}]};
 
 app.get('/menu', (_, res) => res.json(menuData));
 
