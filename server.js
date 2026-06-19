@@ -51,6 +51,9 @@ wss.on('connection', (ws, req) => {
     const bp = bills.filter(b => b.status === 'pending');
     bp.forEach(b => sendTo(ws, b));
     if (bp.length) log(`Enviadas ${bp.length} cuentas a caja`);
+    // Enviar copias de TODOS los pedidos del día para control
+    orders.forEach(o => sendTo(ws, { ...o, type: 'order-copy' }));
+    if (orders.length) log(`Enviadas ${orders.length} copias de pedidos a caja`);
   }
 
   ws.on('message', raw => {
@@ -77,6 +80,10 @@ wss.on('connection', (ws, req) => {
         const roles = Array.from(wss.clients).map(c=>c._role).join(', ');
         log(`Roles conectados: [${roles}] | buscando: ${destRole}`);
         broadcastToRole(destRole, order);
+        // Enviar copia a caja siempre (para control de cuenta)
+        if (destRole !== 'cash') {
+          broadcastToRole('cash', { ...order, type: 'order-copy' });
+        }
         sendTo(ws, { type: 'ack', orderId: order.id, dest: msg.dest });
         log(`Pedido #${order.id} | ${order.label} → ${msg.dest} (${order.items.length} ítems) [${order.camarero}]`);
         break;
