@@ -215,11 +215,21 @@ app.get('/status', (_, res) => res.json({
   clientes: clientes.length, ordersToday: orders.length, connected: wss.clients.size
 }));
 
+// ─── Numeración de tickets ────────────────────────────────────────────────────
+let ticketSeq = 1;
+app.post('/ticket-number', (_, res) => {
+  const year = new Date().getFullYear();
+  const num = ticketSeq++;
+  const id = `${year}-${String(num).padStart(4,'0')}`;
+  log(`Ticket generado: ${id}`);
+  res.json({ id, num, year });
+});
+
 app.get('/orders', (_, res) => res.json(orders));
 
 app.post('/reset', (_, res) => {
   mesas = mesas.map(m => ({ ...m, items: [], total: 0, estado: 'libre' }));
-  clientes = []; orders = []; bills = [];
+  clientes = []; orders = []; bills = []; ticketSeq = 1;
   broadcast({ type: 'sync', mesas, clientes });
   log('Reset del día');
   res.json({ ok: true });
@@ -252,7 +262,7 @@ async function enviarReporte() {
     if(res.ok) log(`Reporte enviado | ${totalVentas.toFixed(2)} €`);
     else log(`Error Resend: ${JSON.stringify(data)}`);
   }catch(e){log(`Error reporte: ${e.message}`);}
-  orders=[];bills=[];
+  orders=[];bills=[];ticketSeq=1;
   mesas=mesas.map(m=>({...m,items:[],total:0,estado:'libre'}));clientes=[];
   broadcast({type:'sync',mesas,clientes});log('Reset automático');
 }
