@@ -225,6 +225,28 @@ app.post('/ticket-number', (_, res) => {
   res.json({ id, num, year });
 });
 
+// ─── Enviar ticket por email ──────────────────────────────────────────────────
+app.post('/ticket-email', async (req, res) => {
+  if (!RESEND_KEY) return res.status(500).json({ error: 'Resend no configurado' });
+  const { to, ticketHtml, subject } = req.body;
+  if (!to || !ticketHtml) return res.status(400).json({ error: 'email y ticketHtml requeridos' });
+  try {
+    const r = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: { 'Authorization': `Bearer ${RESEND_KEY}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        from: FROM_EMAIL,
+        to: [to],
+        subject: subject || 'Factura simplificada · El Melao de Inés',
+        html: ticketHtml
+      })
+    });
+    const data = await r.json();
+    if (r.ok) { log(`Ticket enviado a ${to}`); res.json({ ok: true }); }
+    else { log(`Error email: ${JSON.stringify(data)}`); res.status(500).json(data); }
+  } catch (e) { log(`Error email: ${e.message}`); res.status(500).json({ error: e.message }); }
+});
+
 app.get('/orders', (_, res) => res.json(orders));
 
 app.post('/reset', (_, res) => {
