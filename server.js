@@ -71,6 +71,7 @@ wss.on('connection', (ws, req) => {
           id: Date.now(), type: 'order',
           mesa: msg.mesa, label: msg.label || `Mesa ${msg.mesa}`,
           camarero: msg.camarero || '',
+          orderNum: msg.orderNum || '',
           dest: msg.dest, items: msg.items || [],
           nota: msg.nota || '', total: msg.total || 0,
           time: msg.time || new Date().toISOString(), status: 'pending'
