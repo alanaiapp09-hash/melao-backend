@@ -8,7 +8,6 @@ app.use(cors());
 app.use(express.json());
 
 const PRINTER_SHARE = '\\\\localhost\\POS80';
-const M = '  ';
 
 // ─── ESC/POS helpers ──────────────────────────────────────────────────────────
 const ESC = '\x1B';
@@ -23,10 +22,10 @@ const NORMAL = ESC + '!\x00';
 const CUT = GS + 'V\x42\x00';
 const LF = '\n';
 
-const line = M + '------------------------------' + LF;
+const line = '------------------------------' + LF;
 const pad = (l, r, w = 30) => {
   const space = w - l.length - r.length;
-  return M + l + ' '.repeat(Math.max(1, space)) + r;
+  return l + ' '.repeat(Math.max(1, space)) + r;
 };
 
 // ─── Print ticket (factura) ───────────────────────────────────────────────────
@@ -41,32 +40,32 @@ function printTicket(d, callback) {
   let ticket = INIT;
   ticket += CENTER;
   ticket += BOLD_ON + DOUBLE;
-  ticket += M + 'EL MELAO DE INES' + LF;
+  ticket += 'EL MELAO DE INES' + LF;
   ticket += NORMAL + BOLD_OFF;
-  ticket += M + 'Nelida del Valle Urbano Sanchez' + LF;
-  ticket += M + 'CIF: Z1891011W' + LF;
-  ticket += M + 'Panaderos 25 Bajo Izquierdo' + LF;
-  ticket += M + '28410 Manzanares el Real' + LF;
+  ticket += 'Nelida del Valle Urbano Sanchez' + LF;
+  ticket += 'CIF: Z1891011W' + LF;
+  ticket += 'Panaderos 25 Bajo Izquierdo' + LF;
+  ticket += '28410 Manzanares el Real' + LF;
   ticket += line;
 
   if (isCopy) {
     ticket += BOLD_ON;
-    ticket += M + '** COPIA DE FACTURA **' + LF;
-    ticket += M + '** SIMPLIFICADA **' + LF;
+    ticket += '** COPIA DE FACTURA **' + LF;
+    ticket += '** SIMPLIFICADA **' + LF;
     ticket += BOLD_OFF;
     ticket += line;
   }
 
   ticket += BOLD_ON;
-  ticket += M + 'FACTURA SIMPLIFICADA' + LF;
+  ticket += 'FACTURA SIMPLIFICADA' + LF;
   ticket += BOLD_OFF;
-  ticket += M + 'No ' + ticketId + LF;
+  ticket += 'No ' + ticketId + LF;
   ticket += line;
 
   ticket += LEFT;
   ticket += pad('Fecha: ' + fecha, hora) + LF;
-  ticket += M + BOLD_ON + (d.label || '') + LF + BOLD_OFF;
-  if (d.camarero) ticket += M + 'Camarer@: ' + d.camarero + LF;
+  ticket += BOLD_ON + (d.label || '') + LF + BOLD_OFF;
+  if (d.camarero) ticket += 'Camarer@: ' + d.camarero + LF;
   ticket += line;
 
   ticket += BOLD_ON;
@@ -88,10 +87,10 @@ function printTicket(d, callback) {
   ticket += line;
 
   ticket += CENTER;
-  ticket += M + 'IVA incluido' + LF;
+  ticket += 'IVA incluido' + LF;
   ticket += line;
-  ticket += LF + M + 'Gracias por su visita' + LF;
-  ticket += M + 'elmelaodeines.com' + LF;
+  ticket += LF + 'Gracias por su visita' + LF;
+  ticket += 'elmelaodeines.com' + LF;
   ticket += LF + LF + LF;
   ticket += CUT;
 
@@ -108,25 +107,25 @@ function printComanda(msg) {
   let ticket = INIT;
   ticket += CENTER;
   ticket += BOLD_ON + DOUBLE;
-  ticket += M + '*** COMANDA ***' + LF;
+  ticket += '*** COMANDA ***' + LF;
   ticket += NORMAL + BOLD_OFF;
   ticket += line;
 
   if (msg.orderNum) {
     ticket += CENTER + BOLD_ON + DOUBLE;
-    ticket += M + msg.orderNum + LF;
+    ticket += msg.orderNum + LF;
     ticket += NORMAL + BOLD_OFF;
   }
 
   ticket += CENTER + BOLD_ON;
-  ticket += M + (msg.label || '') + LF;
+  ticket += (msg.label || '') + LF;
   ticket += BOLD_OFF;
-  ticket += M + destino + LF;
+  ticket += destino + LF;
   ticket += line;
 
   ticket += LEFT;
   ticket += pad('Fecha: ' + fecha, hora) + LF;
-  if (msg.camarero) ticket += M + 'Camarer@: ' + msg.camarero + LF;
+  if (msg.camarero) ticket += 'Camarer@: ' + msg.camarero + LF;
   ticket += line;
 
   ticket += BOLD_ON;
@@ -144,12 +143,12 @@ function printComanda(msg) {
 
   if (msg.nota) {
     ticket += line;
-    ticket += M + 'NOTA: ' + msg.nota + LF;
+    ticket += 'NOTA: ' + msg.nota + LF;
   }
 
   ticket += line;
   ticket += CENTER;
-  ticket += M + hora + LF;
+  ticket += hora + LF;
   ticket += LF + LF + LF;
   ticket += CUT;
 
